@@ -5,14 +5,14 @@ import { Response } from 'express';
 import { plainToInstance } from 'class-transformer';
 import { UserResponseDto } from '../user/dto/user-response.dto';
 
-@Controller('auth')
+@Controller('/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
     private userService: UserService
   ) {}
 
-  @Post('login')
+  @Post('/login')
   async login(@Body() body, @Res() res: Response) {
     const user = await this.authService.validateUser(body.username, body.password);
     const token = await this.authService.login(user);
@@ -23,7 +23,7 @@ export class AuthController {
     });
   }
 
-  @Post('register')
+  @Post('/register')
   async register(@Body() body, @Res() res: Response) {
     const existingUser = await this.userService.findOne(body.username);
     if (existingUser) {
